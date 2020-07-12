@@ -5,6 +5,7 @@
   "dependencies": {
     "cra-template": "1.0.3",
     "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.27.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",

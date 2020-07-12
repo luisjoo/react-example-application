@@ -6,6 +6,7 @@ const FlatButtonComponent = (props) =>{
 		<button
 			className="btn-flat black-text waves-effect waves-light"
 			onClick={props.clickMethod}
+			disabled={props.disabled}
 		>
 			{props.buttonText}
 		</button>
@@ -15,6 +16,11 @@ const FlatButtonComponent = (props) =>{
 FlatButtonComponent.propTypes = {
 	clickMethod: Proptypes.func.isRequired,
 	buttonText: Proptypes.string.isRequired,
+	disabled: Proptypes.bool
+};
+
+FlatButtonComponent.defaultProp = {
+	disabled: false
 };
 
 export default FlatButtonComponent;

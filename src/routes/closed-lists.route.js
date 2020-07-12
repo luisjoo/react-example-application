@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ContainerComponent from "../components/container.component";
+import ContainerComponent from "../components/utils/container.component";
 
 class ClosedListsRoute extends Component {
 	render() {

@@ -6,6 +6,7 @@ const ButtonComponent = (props) => {
 		<button
 			className="btn light-blue darken-2 waves-effect white-text"
 			onClick={props.clickMethod}
+			disabled={props.disabled}
 		>
 			{props.buttonText}
 		</button>
@@ -15,6 +16,11 @@ const ButtonComponent = (props) => {
 ButtonComponent.propTypes = {
 	clickMethod: Proptypes.func.isRequired,
 	buttonText: Proptypes.string.isRequired,
+	disabled: Proptypes.bool
+};
+
+ButtonComponent.defaultProps = {
+	disabled: false,
 };
 
 export default ButtonComponent;
