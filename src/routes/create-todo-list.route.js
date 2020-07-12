@@ -3,11 +3,11 @@ import RowComponent from "../components/utils/row.component";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
 import ButtonComponent from "../components/buttons/button.component";
 import InputComponent from "../components/input/input.component";
-import CardComponent from "../components/card/card.component";
 import IconInputComponent from "../components/input/icon-input.component";
 import TaskListContainerComponent from "../components/tasks/task-list-container.component";
 import Moment from 'moment';
 import Constants from "../utils/Contants";
+import CardUi from "../ui/card.ui";
 
 class CreateTodoListRoute extends Component {
 
@@ -169,14 +169,28 @@ class CreateTodoListRoute extends Component {
 	};
 
 	render() {
+		const {
+			listName, taskList, taskName,
+			listDueDate, isEdit,
+		} = this.state;
+
 		return (
-			<RowComponent>
-				<CardComponent
-					cardTitle="Create New Task List"
-					cardContent={this.renderCardContent()}
-					cardActions={this.renderActionButtons()}
-				/>
-			</RowComponent>
+			<CardUi
+				cardTitle="Create New Task List"
+				isEdit={isEdit}
+				listName={listName}
+				taskName={taskName}
+				taskList={taskList}
+				refTask={this.refTask}
+				disableCompletion={true}
+				listDueDate={listDueDate}
+				completeTask={() => null}
+				createTask={this.createTask}
+				updateTask={this.updateTask}
+				onInputChange={this.onInputChange}
+				removeTaskFromList={this.removeTaskFromList}
+				renderActionButtons={this.renderActionButtons()}
+			/>
 		)
 	}
 }
