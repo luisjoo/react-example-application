@@ -1,13 +1,10 @@
-import React, {Component, Fragment} from 'react';
+import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import CardComponent from "../components/card/card.component";
-import moment from 'moment';
-import ContainerComponent from "../components/utils/container.component";
-import TaskListContainerComponent from "../components/tasks/task-list-container.component";
-import RowComponent from "../components/utils/row.component";
-import ButtonComponent from "../components/buttons/button.component";
 import {checkTask, closeList} from "../store/action";
+import ButtonComponent from "../components/buttons/button.component";
 import ToDoListStatus from "../utils/to-do-list-status";
+import ToDoListCardUi from "../ui/to-do-list-card.ui";
+import FlatButtonComponent from "../components/buttons/flat-button.component";
 
 class ToDoListsRoute extends Component {
 	toggleCheckTask = (listId, taskId) => {
@@ -20,25 +17,10 @@ class ToDoListsRoute extends Component {
 		closeList(listId)
 	};
 
-	renderCard = () => {
-		const {toDoLists} = this.props;
-
-		return toDoLists
-			.filter(list => (list.listStatus === ToDoListStatus.OPEN))
-			.map(list => (
-				<CardComponent
-					key={list.listId}
-					cardTitle={`${list.listName} Due date: ${moment(list.listDueDate).format('lll')}`}
-					cardActions={this.renderActions(list.listId)}
-					cardContent={this.renderCardContent(list)}
-				/>
-			));
-	};
-
 	renderActions = (listId) => {
 		return (
-			<RowComponent>
-				<ButtonComponent
+			<div className="row text-right">
+				<FlatButtonComponent
 					clickMethod={() => this.completeList(listId)}
 					buttonText="Complete List"
 				/>
@@ -47,36 +29,21 @@ class ToDoListsRoute extends Component {
 					clickMethod={() => null}
 					buttonText="Edit List"
 				/>
-			</RowComponent>
-		)
-	};
-
-	renderCardContent = (list) => {
-		const {taskList, listId} = list;
-		return (
-			<Fragment>
-				<RowComponent>
-
-				</RowComponent>
-				<TaskListContainerComponent
-					taskList={taskList}
-					disableCompletion={false}
-					removeFromList={() => null}
-					updateItemInList={() => null}
-					hideTaskActionButtons
-					completeTask={(taskId) => this.toggleCheckTask(listId, taskId)}
-				/>
-			</Fragment>
+			</div>
 		)
 	};
 
 	render() {
-		console.log('ttt', this.props);
+		const {toDoLists} = this.props;
+		const filteredToDos = toDoLists
+			.filter(list => (list.listStatus === ToDoListStatus.OPEN));
 		return (
-			<ContainerComponent>
-				{this.renderCard()}
-			</ContainerComponent>
-
+			<ToDoListCardUi
+				toDoLists={filteredToDos}
+				closeList={this.completeList}
+				toggleCheck={this.toggleCheckTask}
+				renderActions={this.renderActions}
+			/>
 		);
 	}
 }

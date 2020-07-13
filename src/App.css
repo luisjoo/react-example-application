@@ -16,3 +16,7 @@ body {
   height: 60px;
   justify-content: center;
 }
+
+.text-right {
+  text-align: right;
+}
