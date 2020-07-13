@@ -8,7 +8,7 @@ const toDoLists = (state = [], action) => {
 		case CLOSE_TASK_TODO_LIST:
 			return closeToDoList(state, action.data);
 		case REMOVE_TODO_LIST:
-			return state;
+			return deleteToDoList(state, action.data);
 		case ADD_TODO_LIST:
 			return addListToState(state, action.data);
 		default:
@@ -18,6 +18,10 @@ const toDoLists = (state = [], action) => {
 
 const addListToState = (list, data) => {
 	return [...list, data];
+};
+
+const deleteToDoList = (state, listId) => {
+	return state.filter(list => list.listId !== listId)
 };
 
 const closeToDoList = (lists, listId) => {

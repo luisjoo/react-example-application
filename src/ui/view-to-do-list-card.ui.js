@@ -27,13 +27,15 @@ class ViewToDoListCardUi extends PureComponent {
 
 	renderCardContent = (list) => {
 		const {taskList, listId} = list;
+		const {disableCompletion} = this.props;
+
 		return (
 			<TaskListContainerComponent
 				taskList={taskList}
-				disableCompletion={false}
 				removeFromList={() => null}
 				updateItemInList={() => null}
 				hideTaskActionButtons
+				disableCompletion={disableCompletion}
 				completeTask={(taskId) => this.toggleCheckTask(listId, taskId)}
 			/>
 		)
@@ -54,7 +56,12 @@ ViewToDoListCardUi.propTypes = {
 	closeList: PropTypes.func.isRequired,
 	toDoLists: PropTypes.array.isRequired,
 	toggleCheck: PropTypes.func.isRequired,
-	renderActions: PropTypes.any.isRequired
+	renderActions: PropTypes.any.isRequired,
+	disableCompletion: PropTypes.bool,
+};
+
+ViewToDoListCardUi.defaultProps= {
+	disableCompletion: false,
 };
 
 export default ViewToDoListCardUi;

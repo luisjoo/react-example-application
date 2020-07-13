@@ -5,7 +5,7 @@ export const addToDoList = (toDoList) => ({
 	data: toDoList,
 });
 
-export const removeToDoList = (listId, taskId) => ({
+export const removeToDoList = (listId) => ({
 	type: REMOVE_TODO_LIST,
 	data: listId,
 });
