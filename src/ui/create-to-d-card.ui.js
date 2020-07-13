@@ -8,7 +8,7 @@ import IconInputComponent from "../components/input/icon-input.component";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
 import ButtonComponent from "../components/buttons/button.component";
 
-class CardUi extends PureComponent {
+class CreateToDCardUi extends PureComponent {
 	renderTaskUpdateButtons = () => {
 		const {isEdit, saveUpdatedTask, cancelTaskUpdate} = this.props;
 		if (!isEdit) return null;
@@ -124,7 +124,7 @@ class CardUi extends PureComponent {
 	}
 }
 
-CardUi.propTypes = {
+CreateToDCardUi.propTypes = {
 	taskName: PropTypes.string.isRequired,
 	listName: PropTypes.string.isRequired,
 	cardTitle: PropTypes.string.isRequired,
@@ -147,4 +147,4 @@ CardUi.propTypes = {
 	renderActionButtons: PropTypes.any.isRequired,
 };
 
-export default CardUi;
+export default CreateToDCardUi;

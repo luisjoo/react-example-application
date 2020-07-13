@@ -3,7 +3,7 @@ import FlatButtonComponent from "../components/buttons/flat-button.component";
 import ButtonComponent from "../components/buttons/button.component";
 import Moment from 'moment';
 import Constants from "../utils/Contants";
-import CardUi from "../ui/card.ui";
+import CreateToDCardUi from "../ui/create-to-d-card.ui";
 import {connect} from 'react-redux'
 import {addToDoList} from '../store/action'
 import ToDoListStatus from "../utils/to-do-list-status";
@@ -149,7 +149,7 @@ class CreateTodoListRoute extends Component {
 		} = this.state;
 
 		return (
-			<CardUi
+			<CreateToDCardUi
 				cardTitle="Create New Task List"
 				isEdit={edition}
 				listName={listName}

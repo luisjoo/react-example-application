@@ -5,7 +5,7 @@ import CardComponent from "../components/card/card.component";
 import ContainerComponent from "../components/utils/container.component";
 import TaskListContainerComponent from "../components/tasks/task-list-container.component";
 
-class ToDoListCardUi extends PureComponent {
+class ViewToDoListCardUi extends PureComponent {
 	toggleCheckTask = (listId, taskId) => {
 		const {toggleCheck} = this.props;
 		toggleCheck(listId, taskId);
@@ -50,11 +50,11 @@ class ToDoListCardUi extends PureComponent {
 	}
 }
 
-ToDoListCardUi.propTypes = {
+ViewToDoListCardUi.propTypes = {
 	closeList: PropTypes.func.isRequired,
 	toDoLists: PropTypes.array.isRequired,
 	toggleCheck: PropTypes.func.isRequired,
 	renderActions: PropTypes.any.isRequired
 };
 
-export default ToDoListCardUi;
+export default ViewToDoListCardUi;

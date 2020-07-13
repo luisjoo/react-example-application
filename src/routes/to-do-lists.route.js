@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {checkTask, closeList} from "../store/action";
 import ButtonComponent from "../components/buttons/button.component";
 import ToDoListStatus from "../utils/to-do-list-status";
-import ToDoListCardUi from "../ui/to-do-list-card.ui";
+import ViewToDoListCardUi from "../ui/view-to-do-list-card.ui";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
 
 class ToDoListsRoute extends Component {
@@ -38,7 +38,7 @@ class ToDoListsRoute extends Component {
 		const filteredToDos = toDoLists
 			.filter(list => (list.listStatus === ToDoListStatus.OPEN));
 		return (
-			<ToDoListCardUi
+			<ViewToDoListCardUi
 				toDoLists={filteredToDos}
 				closeList={this.completeList}
 				toggleCheck={this.toggleCheckTask}
