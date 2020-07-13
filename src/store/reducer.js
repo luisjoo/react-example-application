@@ -1,4 +1,4 @@
-import {CHECK_TASK_TODO_LIST, REMOVE_TODO_LIST, ADD_TODO_LIST} from './types'
+import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, REMOVE_TODO_LIST} from './types'
 
 const toDoLists = (state = [], action) => {
 	switch (action.type) {

@@ -110,9 +110,10 @@ class CreateTodoListRoute extends Component {
 		const {addToDoList} = this.props;
 
 		const toDoList = {
+			taskList,
 			listName,
 			listDueDate,
-			taskList,
+			listId: Date.now(),
 		};
 
 		addToDoList(toDoList);
