@@ -1,4 +1,10 @@
-import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, REMOVE_TODO_LIST, UPDATE_TASK_TODO_LIST} from './types'
+import {
+	ADD_TODO_LIST,
+	CHECK_TASK_TODO_LIST,
+	REMOVE_TODO_LIST,
+	UPDATE_PERFORM_TASK_TODO_LIST,
+	UPDATE_TASK_TODO_LIST
+} from './types'
 
 const toDoLists = (state = [], action) => {
 	switch (action.type) {
@@ -10,6 +16,8 @@ const toDoLists = (state = [], action) => {
 			return deleteToDoList(state, action.data);
 		case ADD_TODO_LIST:
 			return addListToState(state, action.data);
+		case UPDATE_PERFORM_TASK_TODO_LIST:
+			return updateToDoList(state, action.data);
 		default:
 			return state;
 	}
@@ -52,6 +60,16 @@ const toggleCheck = (taskList, taskId) => {
 
 		return task;
 	})
+};
+
+const updateToDoList = (state, updatedList) => {
+	const list = state.find(list => list.listId === updatedList.listId);
+	const index = state.indexOf(list);
+
+	const copy = [...state];
+	copy[index] = updatedList;
+
+	return copy
 };
 
 export default toDoLists;

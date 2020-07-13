@@ -5,6 +5,7 @@ import ButtonComponent from "../components/buttons/button.component";
 import ToDoListStatus from "../utils/to-do-list-status";
 import ViewToDoListCardUi from "../ui/view-to-do-list-card.ui";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
+import {withRouter} from 'react-router-dom';
 
 class ToDoListsRoute extends Component {
 	toggleCheckTask = (listId, taskId) => {
@@ -17,6 +18,12 @@ class ToDoListsRoute extends Component {
 		updateListStatus(listId, ToDoListStatus.CLOSED);
 	};
 
+	updateToDoList = (listId) => {
+		const {history, } = this.props;
+		// console.log(history, listId);
+		history.push(`/edit-to-do-list/${listId}`)
+	};
+
 	renderActions = (listId) => {
 		return (
 			<div className="row text-right">
@@ -26,7 +33,7 @@ class ToDoListsRoute extends Component {
 				/>
 				<span className="white-text"> __ </span>
 				<ButtonComponent
-					clickMethod={() => null}
+					clickMethod={() => this.updateToDoList(listId)}
 					buttonText="Edit List"
 				/>
 			</div>
@@ -63,4 +70,5 @@ const mapDispatchToProps = (_dispatch) => {
 	}
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ToDoListsRoute);
+const withRouterComponent = withRouter(ToDoListsRoute);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouterComponent);

@@ -10,6 +10,7 @@ import ToDoListsRoute from "./routes/to-do-lists.route";
 import CreateTodoListRoute from "./routes/create-todo-list.route";
 import ClosedListsRoute from "./routes/closed-lists.route";
 import store from './store'
+import UpdateToDoListRoute from "./routes/update-to-do-list.route";
 
 function App() {
 	return (
@@ -23,6 +24,9 @@ function App() {
 						</Route>
 						<Route path="/closed-lists">
 							<ClosedListsRoute/>
+						</Route>
+						<Route path="/edit-to-do-list/:listId">
+							<UpdateToDoListRoute/>
 						</Route>
 						<Route path="/">
 							<ToDoListsRoute/>
