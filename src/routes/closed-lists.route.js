@@ -5,15 +5,18 @@ import ButtonComponent from "../components/buttons/button.component";
 import ToDoListStatus from "../utils/to-do-list-status";
 import ViewToDoListCardUi from "../ui/view-to-do-list-card.ui";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
+import Toast from "../utils/toast";
 
 class ClosedListsRoute extends Component {
 	deleteTask = (listId) => {
 		const {removeToDoList} = this.props;
+		Toast.success('To Do List Removed');
 		removeToDoList(listId)
 	};
 
 	reopenToDoList = (listId) => {
 		const {updateListStatus} = this.props;
+		Toast.info('To Do List Reopened');
 		updateListStatus(listId, ToDoListStatus.OPEN);
 	};
 

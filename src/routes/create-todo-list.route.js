@@ -7,6 +7,7 @@ import CreateToDCardUi from "../ui/create-to-d-card.ui";
 import {connect} from 'react-redux'
 import {addToDoList} from '../store/action'
 import ToDoListStatus from "../utils/to-do-list-status";
+import Toast from "../utils/toast";
 
 class CreateTodoListRoute extends Component {
 	constructor(props) {
@@ -42,6 +43,11 @@ class CreateTodoListRoute extends Component {
 	createTask = () => {
 		const {taskName, taskList} = this.state;
 
+		if(!taskName.trim()){
+			Toast.error('You must write the name of the task');
+			return;
+		}
+
 		const listCopy = [...taskList];
 		const obj = {
 			taskName,
@@ -63,6 +69,7 @@ class CreateTodoListRoute extends Component {
 		const task = taskList.find(item => item.taskId === taskId);
 
 		this.refTask.current.focus();
+		Toast.success('Changes Saved!');
 		this.setState({
 			edition: true,
 			selectedId: taskId,
@@ -119,6 +126,7 @@ class CreateTodoListRoute extends Component {
 		};
 
 		addToDoList(toDoList);
+		Toast.success('New To Do List Added');
 		this.clearFields();
 	};
 

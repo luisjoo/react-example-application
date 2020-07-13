@@ -7,6 +7,7 @@ import CreateToDCardUi from "../ui/create-to-d-card.ui";
 import {withRouter} from 'react-router-dom';
 import {connect} from 'react-redux';
 import {updateToDoList} from "../store/action";
+import Toast from "../utils/toast";
 
 class UpdateToDoListRoute extends Component {
 	constructor(props) {
@@ -128,6 +129,7 @@ class UpdateToDoListRoute extends Component {
 		};
 
 		updateToDoList(toDoList);
+		Toast.success('To Do List Updated!');
 		this.goBack();
 	};
 
