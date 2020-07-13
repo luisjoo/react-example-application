@@ -1,26 +1,68 @@
-import React, {PureComponent} from 'react';
+import React, {Fragment, PureComponent} from 'react';
 import PropTypes from 'prop-types';
 import CardComponent from "../components/card/card.component";
 import RowComponent from "../components/utils/row.component";
 import InputComponent from "../components/input/input.component";
 import TaskListContainerComponent from "../components/tasks/task-list-container.component";
 import IconInputComponent from "../components/input/icon-input.component";
+import FlatButtonComponent from "../components/buttons/flat-button.component";
+import ButtonComponent from "../components/buttons/button.component";
 
 class CardUi extends PureComponent {
+	renderTaskUpdateButtons = () => {
+		const {isEdit, saveUpdatedTask, cancelTaskUpdate} = this.props;
+		if (!isEdit) return null;
+
+		return (
+			<Fragment>
+				<div className="col s2 center-button">
+					<FlatButtonComponent
+						clickMethod={cancelTaskUpdate}
+						buttonText="Cancel"
+					/>
+				</div>
+				<div className="col s2 center-button">
+					<ButtonComponent
+						clickMethod={saveUpdatedTask}
+						buttonText="Save"
+					/>
+				</div>
+			</Fragment>
+		);
+	};
+
+	renderAddNewTask = () => {
+		const {isEdit, createTask} = this.props;
+		if (isEdit) return null;
+
+		return (
+			<div className="col s2 center-button">
+				<ButtonComponent
+					clickMethod={createTask}
+					buttonText="Add"
+				/>
+			</div>
+		);
+	};
+
 	renderTaskCreationUpdateInput = () => {
 		const {taskName, isEdit, createTask, onInputChange, refTask} = this.props;
 		const inputIcon = !isEdit ? 'add' : 'edit';
+		const containerClass = !isEdit ? 'col s10' : 'col s8';
 		return (
 			<RowComponent>
-				<IconInputComponent
-					value={taskName}
-					iconName={inputIcon}
-					labelName="Task Name"
-					inputId="addTaskToList"
-					onKeyUp={createTask}
-					taskReference={refTask}
-					onChange={onInputChange('taskName')}
-				/>
+				<div className={containerClass}>
+					<IconInputComponent
+						value={taskName}
+						iconName={inputIcon}
+						labelName="Task Name"
+						inputId="addTaskToList"
+						taskReference={refTask}
+						onChange={onInputChange('taskName')}
+					/>
+				</div>
+				{this.renderTaskUpdateButtons()}
+				{this.renderAddNewTask()}
 			</RowComponent>
 		);
 	};
@@ -33,7 +75,7 @@ class CardUi extends PureComponent {
 		} = this.props;
 
 		return (
-			<form>
+			<Fragment>
 				<RowComponent>
 					<InputComponent
 						inputType="text"
@@ -62,7 +104,7 @@ class CardUi extends PureComponent {
 					removeFromList={removeTaskFromList}
 					disableCompletion={disableCompletion}
 				/>
-			</form>
+			</Fragment>
 		);
 	};
 
@@ -94,6 +136,8 @@ CardUi.propTypes = {
 	createTask: PropTypes.func.isRequired,
 	completeTask: PropTypes.func.isRequired,
 	onInputChange: PropTypes.func.isRequired,
+	saveUpdatedTask: PropTypes.func.isRequired,
+	cancelTaskUpdate: PropTypes.func.isRequired,
 	removeTaskFromList: PropTypes.func.isRequired,
 
 	refTask: PropTypes.any.isRequired,

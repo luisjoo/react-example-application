@@ -10,7 +10,6 @@ import Constants from "../utils/Contants";
 import CardUi from "../ui/card.ui";
 
 class CreateTodoListRoute extends Component {
-
 	constructor(props) {
 		super(props);
 
@@ -26,7 +25,7 @@ class CreateTodoListRoute extends Component {
 		disableCompletion: true,
 
 		// update task
-		isEdit: false,
+		edition: false,
 		selectedId: null,
 	});
 
@@ -41,11 +40,9 @@ class CreateTodoListRoute extends Component {
 		}
 	};
 
-	createTask = (event) => {
-		event.preventDefault();
-		if (event.which !== 13) return;
-
+	createTask = () => {
 		const {taskName, taskList} = this.state;
+
 		const listCopy = [...taskList];
 		const obj = {
 			taskName,
@@ -68,22 +65,36 @@ class CreateTodoListRoute extends Component {
 
 		this.refTask.current.focus();
 		this.setState({
-			isEdit: true,
+			edition: true,
 			selectedId: taskId,
 			taskName: task.taskName
 		});
 	};
 
-	completeTask = (id, value) => {
-		const {taskList} = this.state;
-		const newList = taskList.map((task) => {
-			if (task.taskId === id) {
-				return {...task, taskCompleted: value}
+	cancelTaskUpdate = () => {
+		this.setState({
+			edition: false,
+			selectedId: null,
+			taskName: ''
+		});
+	};
+
+	updateSelectedTask = () => {
+		const {selectedId, taskName, taskList} = this.state;
+		const updatedTaskList = taskList.map((task) => {
+			if (task.taskId === selectedId) {
+				task.taskName = taskName;
 			}
+
 			return task;
 		});
 
-		this.setState({taskList: newList});
+		this.setState({
+			taskName: '',
+			edition: false,
+			selectedId: null,
+			taskList: updatedTaskList,
+		});
 	};
 
 	isDisabled = () => {
@@ -94,61 +105,6 @@ class CreateTodoListRoute extends Component {
 		const hasItemsInList = (taskList && taskList.length === 0);
 
 		return (hasDueDate || hasListName || hasItemsInList);
-	};
-
-	renderTaskCreationUpdateInput = () => {
-		const {taskName, isEdit} = this.state;
-		const inputIcon = !isEdit ? 'add' : 'edit';
-		return (
-			<RowComponent>
-				<IconInputComponent
-					value={taskName}
-					iconName={inputIcon}
-					labelName="Task Name"
-					inputId="addTaskToList"
-					onKeyUp={this.createTask}
-					taskReference={this.refTask}
-					onChange={this.onInputChange('taskName')}
-				/>
-			</RowComponent>
-		);
-	};
-
-	renderCardContent = () => {
-		const {listName, listDueDate, taskList, disableCompletion} = this.state;
-
-		return (
-			<form>
-				<RowComponent>
-					<InputComponent
-						inputType="text"
-						elementId="listName"
-						labelText="List Name"
-						value={listName}
-						onChange={this.onInputChange('listName')}
-					/>
-				</RowComponent>
-				<RowComponent>
-					<InputComponent
-						inputType="date"
-						elementId="listDueDate"
-						labelText="Due date"
-						value={listDueDate}
-						onChange={this.onInputChange('listDueDate')}
-					/>
-				</RowComponent>
-
-				{this.renderTaskCreationUpdateInput()}
-
-				<TaskListContainerComponent
-					taskList={taskList}
-					completeTask={this.completeTask}
-					updateItemInList={this.updateTask}
-					disableCompletion={disableCompletion}
-					removeFromList={this.removeTaskFromList}
-				/>
-			</form>
-		);
 	};
 
 	renderActionButtons = () => {
@@ -171,13 +127,13 @@ class CreateTodoListRoute extends Component {
 	render() {
 		const {
 			listName, taskList, taskName,
-			listDueDate, isEdit,
+			listDueDate, edition,
 		} = this.state;
 
 		return (
 			<CardUi
 				cardTitle="Create New Task List"
-				isEdit={isEdit}
+				isEdit={edition}
 				listName={listName}
 				taskName={taskName}
 				taskList={taskList}
@@ -188,6 +144,8 @@ class CreateTodoListRoute extends Component {
 				createTask={this.createTask}
 				updateTask={this.updateTask}
 				onInputChange={this.onInputChange}
+				cancelTaskUpdate={this.cancelTaskUpdate}
+				saveUpdatedTask={this.updateSelectedTask}
 				removeTaskFromList={this.removeTaskFromList}
 				renderActionButtons={this.renderActionButtons()}
 			/>

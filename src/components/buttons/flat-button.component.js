@@ -4,7 +4,7 @@ import Proptypes from 'prop-types';
 const FlatButtonComponent = (props) =>{
 	return (
 		<button
-			className="btn-flat black-text waves-effect waves-light"
+			className="btn-flat black-text waves-effect waves-light small"
 			onClick={props.clickMethod}
 			disabled={props.disabled}
 		>

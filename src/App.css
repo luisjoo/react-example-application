@@ -9,3 +9,10 @@ body {
 .sidenav.blue-grey.darken-3 li a {
   color: #FFF;
 }
+
+.center-button {
+  align-items: center;
+  display: flex;
+  height: 60px;
+  justify-content: center;
+}

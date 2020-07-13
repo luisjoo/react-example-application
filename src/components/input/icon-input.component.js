@@ -31,7 +31,9 @@ IconInputComponent.propTypes = {
 };
 
 IconInputComponent.defaultProps = {
-	onKeyUp: () => null,
+	onKeyUp: (event) => {
+		event.preventDefault();
+	},
 	inputType: "text",
 	otherProps: {}
 };

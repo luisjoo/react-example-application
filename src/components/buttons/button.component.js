@@ -4,7 +4,7 @@ import Proptypes from "prop-types";
 const ButtonComponent = (props) => {
 	return (
 		<button
-			className="btn light-blue darken-2 waves-effect white-text"
+			className="btn light-blue darken-2 waves-effect white-text small"
 			onClick={props.clickMethod}
 			disabled={props.disabled}
 		>
