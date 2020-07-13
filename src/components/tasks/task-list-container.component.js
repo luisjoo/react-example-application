@@ -7,7 +7,7 @@ class TaskListContainerComponent extends PureComponent {
 	renderTaskList = () => {
 		const {
 			taskList, completeTask, disableCompletion,
-			removeFromList, updateItemInList
+			removeFromList, updateItemInList, hideTaskActionButtons
 		} = this.props;
 
 		return taskList.map((task) => (
@@ -19,6 +19,7 @@ class TaskListContainerComponent extends PureComponent {
 				removeFromList={() => removeFromList(task.taskId)}
 				updateItemInList={() => updateItemInList(task.taskId)}
 				onChange={() => completeTask(task.taskId, task.taskCompleted)}
+				hideTaskActionButtons={hideTaskActionButtons}
 			/>
 		));
 	};
@@ -42,6 +43,11 @@ TaskListContainerComponent.propTypes = {
 	disableCompletion: PropTypes.bool.isRequired,
 	removeFromList: PropTypes.func.isRequired,
 	updateItemInList: PropTypes.func.isRequired,
+	hideTaskActionButtons: PropTypes.bool
+};
+
+TaskListContainerComponent.defaultProps = {
+	hideTaskActionButtons: false,
 };
 
 export default TaskListContainerComponent;

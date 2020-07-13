@@ -143,6 +143,7 @@ class CreateTodoListRoute extends Component {
 				completeTask={() => null}
 				createTask={this.createTask}
 				updateTask={this.updateTask}
+				hideTaskActionButtons={edition}
 				onInputChange={this.onInputChange}
 				cancelTaskUpdate={this.cancelTaskUpdate}
 				saveUpdatedTask={this.updateSelectedTask}

@@ -71,7 +71,7 @@ class CardUi extends PureComponent {
 		const {
 			listName, listDueDate, taskList, disableCompletion,
 			completeTask, updateTask, removeTaskFromList,
-			onInputChange
+			onInputChange, hideTaskActionButtons
 		} = this.props;
 
 		return (
@@ -103,6 +103,7 @@ class CardUi extends PureComponent {
 					updateItemInList={updateTask}
 					removeFromList={removeTaskFromList}
 					disableCompletion={disableCompletion}
+					hideTaskActionButtons={hideTaskActionButtons}
 				/>
 			</Fragment>
 		);
@@ -131,6 +132,7 @@ CardUi.propTypes = {
 
 	isEdit: PropTypes.bool.isRequired,
 	disableCompletion: PropTypes.bool.isRequired,
+	hideTaskActionButtons: PropTypes.bool.isRequired,
 
 	updateTask: PropTypes.func.isRequired,
 	createTask: PropTypes.func.isRequired,

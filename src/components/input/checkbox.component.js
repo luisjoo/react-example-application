@@ -1,17 +1,31 @@
-import React, {PureComponent} from 'react';
+import React, {Fragment, PureComponent} from 'react';
 import Proptypes from 'prop-types';
-import FlatButtonComponent from "../buttons/flat-button.component";
 
 class CheckboxComponent extends PureComponent {
-	test() {
-		console.log('1')
-	}
+	renderActionButtons = () => {
+		const {hideTaskActionButtons, removeFromList, updateItemInList} = this.props;
+		if (hideTaskActionButtons) return null;
+
+		return (
+			<Fragment>
+				<div className="col s2">
+					<a className="btn-flat waves-effect small"
+					   onClick={updateItemInList}>
+						Update
+					</a>
+				</div>
+				<div className="col s2">
+					<a className="btn-flat waves-effect large"
+					   onClick={removeFromList}>
+						remove
+					</a>
+				</div>
+			</Fragment>
+		)
+	};
 
 	render() {
-		const {
-			disabled, onChange, isChecked,
-			taskName, removeFromList, updateItemInList
-		} = this.props;
+		const {disabled, onChange, isChecked, taskName} = this.props;
 
 		return (
 			<div className="row">
@@ -27,18 +41,7 @@ class CheckboxComponent extends PureComponent {
 						<span>{taskName}</span>
 					</label>
 				</div>
-				<div className="col s2">
-					<a className="btn-flat waves-effect small"
-					   onClick={updateItemInList}>
-						Update
-					</a>
-				</div>
-				<div className="col s2">
-					<a className="btn-flat waves-effect large"
-					   onClick={removeFromList}>
-						remove
-					</a>
-				</div>
+				{this.renderActionButtons()}
 			</div>
 		);
 	}
@@ -50,7 +53,12 @@ CheckboxComponent.propTypes = {
 	onChange: Proptypes.func.isRequired,
 	disabled: Proptypes.bool.isRequired,
 	removeFromList: Proptypes.func.isRequired,
-	updateItemInList: Proptypes.func.isRequired
+	updateItemInList: Proptypes.func.isRequired,
+	hideTaskActionButtons: Proptypes.bool
+};
+
+CheckboxComponent.defaultProps = {
+	hideTaskActionButtons: false,
 };
 
 export default CheckboxComponent;
