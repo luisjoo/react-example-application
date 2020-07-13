@@ -1,13 +1,11 @@
 import React, {Component, Fragment} from 'react';
-import RowComponent from "../components/utils/row.component";
 import FlatButtonComponent from "../components/buttons/flat-button.component";
 import ButtonComponent from "../components/buttons/button.component";
-import InputComponent from "../components/input/input.component";
-import IconInputComponent from "../components/input/icon-input.component";
-import TaskListContainerComponent from "../components/tasks/task-list-container.component";
 import Moment from 'moment';
 import Constants from "../utils/Contants";
 import CardUi from "../ui/card.ui";
+import {connect} from 'react-redux'
+import {addToDoList} from '../store/action'
 
 class CreateTodoListRoute extends Component {
 	constructor(props) {
@@ -107,16 +105,33 @@ class CreateTodoListRoute extends Component {
 		return (hasDueDate || hasListName || hasItemsInList);
 	};
 
+	saveTaskList = () => {
+		const {listName, taskList,listDueDate} = this.state;
+		const {addToDoList} = this.props;
+
+		const toDoList = {
+			listName,
+			listDueDate,
+			taskList,
+		};
+
+		addToDoList(toDoList);
+		this.clearFields();
+	};
+
+	clearFields = () => {
+		this.setState(this.getInitialState());
+	};
+
 	renderActionButtons = () => {
 		return (
 			<Fragment>
 				<FlatButtonComponent
-					clickMethod={() => {
-					}}
+					clickMethod={this.clearFields}
 					buttonText="Clear Fields"
 				/>
 				<ButtonComponent
-					clickMethod={() => null}
+					clickMethod={this.saveTaskList}
 					buttonText="Save List"
 					disabled={this.isDisabled()}
 				/>
@@ -154,4 +169,13 @@ class CreateTodoListRoute extends Component {
 	}
 }
 
-export default CreateTodoListRoute;
+const mapStateToProps = () => ({});
+const mapDispatchToProps = (_dispatch) => {
+	return {
+		addToDoList: todoList => {
+			_dispatch(addToDoList(todoList))
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(CreateTodoListRoute);
