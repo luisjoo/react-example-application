@@ -6,27 +6,41 @@ import ContainerComponent from "../components/utils/container.component";
 import TaskListContainerComponent from "../components/tasks/task-list-container.component";
 import RowComponent from "../components/utils/row.component";
 import ButtonComponent from "../components/buttons/button.component";
+import {checkTask, closeList} from "../store/action";
+import ToDoListStatus from "../utils/to-do-list-status";
 
 class ToDoListsRoute extends Component {
+	toggleCheckTask = (listId, taskId) => {
+		const {toggleCheck} = this.props;
+		toggleCheck(listId, taskId);
+	};
+
+	completeList = (listId) => {
+		const {closeList} = this.props;
+		closeList(listId)
+	};
+
 	renderCard = () => {
 		const {toDoLists} = this.props;
 
-		return toDoLists.map(list => (
-			<CardComponent
-				key={list.listId}
-				cardTitle={list.listName}
-				cardActions={this.renderActions()}
-				cardContent={this.renderCardContent(list)}
-			/>
-		));
+		return toDoLists
+			.filter(list => (list.listStatus === ToDoListStatus.OPEN))
+			.map(list => (
+				<CardComponent
+					key={list.listId}
+					cardTitle={`${list.listName} Due date: ${moment(list.listDueDate).format('lll')}`}
+					cardActions={this.renderActions(list.listId)}
+					cardContent={this.renderCardContent(list)}
+				/>
+			));
 	};
 
-	renderActions = () => {
+	renderActions = (listId) => {
 		return (
 			<RowComponent>
 				<ButtonComponent
-					clickMethod={() => null}
-					buttonText="Close List"
+					clickMethod={() => this.completeList(listId)}
+					buttonText="Complete List"
 				/>
 				<span className="white-text"> __ </span>
 				<ButtonComponent
@@ -38,19 +52,19 @@ class ToDoListsRoute extends Component {
 	};
 
 	renderCardContent = (list) => {
-		const {taskList, listDueDate} = list;
+		const {taskList, listId} = list;
 		return (
 			<Fragment>
 				<RowComponent>
-					<span>Due date: {moment(listDueDate).format('lll')}</span>
+
 				</RowComponent>
 				<TaskListContainerComponent
 					taskList={taskList}
 					disableCompletion={false}
-					completeTask={() => null}
 					removeFromList={() => null}
 					updateItemInList={() => null}
 					hideTaskActionButtons
+					completeTask={(taskId) => this.toggleCheckTask(listId, taskId)}
 				/>
 			</Fragment>
 		)
@@ -71,4 +85,15 @@ const mapStateToProps = (_state) => ({
 	toDoLists: _state.toDoLists
 });
 
-export default connect(mapStateToProps)(ToDoListsRoute);
+const mapDispatchToProps = (_dispatch) => {
+	return {
+		toggleCheck: (listId, taskId) => {
+			_dispatch(checkTask(listId, taskId));
+		},
+		closeList: (listId) => {
+			_dispatch(closeList(listId))
+		}
+	}
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDoListsRoute);

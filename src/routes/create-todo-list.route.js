@@ -6,6 +6,7 @@ import Constants from "../utils/Contants";
 import CardUi from "../ui/card.ui";
 import {connect} from 'react-redux'
 import {addToDoList} from '../store/action'
+import ToDoListStatus from "../utils/to-do-list-status";
 
 class CreateTodoListRoute extends Component {
 	constructor(props) {
@@ -114,6 +115,7 @@ class CreateTodoListRoute extends Component {
 			listName,
 			listDueDate,
 			listId: Date.now(),
+			listStatus: ToDoListStatus.OPEN,
 		};
 
 		addToDoList(toDoList);
