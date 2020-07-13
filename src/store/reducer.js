@@ -1,12 +1,11 @@
-import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, CLOSE_TASK_TODO_LIST, REMOVE_TODO_LIST} from './types'
-import ToDoListStatus from "../utils/to-do-list-status";
+import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, REMOVE_TODO_LIST, UPDATE_TASK_TODO_LIST} from './types'
 
 const toDoLists = (state = [], action) => {
 	switch (action.type) {
 		case CHECK_TASK_TODO_LIST:
 			return checkTaskToggle(state, action.data);
-		case CLOSE_TASK_TODO_LIST:
-			return closeToDoList(state, action.data);
+		case UPDATE_TASK_TODO_LIST:
+			return updateToDoListStatus(state, action.data);
 		case REMOVE_TODO_LIST:
 			return deleteToDoList(state, action.data);
 		case ADD_TODO_LIST:
@@ -24,10 +23,11 @@ const deleteToDoList = (state, listId) => {
 	return state.filter(list => list.listId !== listId)
 };
 
-const closeToDoList = (lists, listId) => {
+const updateToDoListStatus = (lists, data) => {
+	const {listId, status} = data;
 	return lists.map(list => {
 		if (list.listId === listId) {
-			list.listStatus = ToDoListStatus.CLOSED;
+			list.listStatus = status;
 		}
 
 		return list;

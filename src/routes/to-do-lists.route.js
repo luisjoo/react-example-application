@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux'
-import {checkTask, closeList} from "../store/action";
+import {checkTask, updateListStatus} from "../store/action";
 import ButtonComponent from "../components/buttons/button.component";
 import ToDoListStatus from "../utils/to-do-list-status";
 import ViewToDoListCardUi from "../ui/view-to-do-list-card.ui";
@@ -13,8 +13,8 @@ class ToDoListsRoute extends Component {
 	};
 
 	completeList = (listId) => {
-		const {closeList} = this.props;
-		closeList(listId)
+		const {updateListStatus} = this.props;
+		updateListStatus(listId, ToDoListStatus.CLOSED);
 	};
 
 	renderActions = (listId) => {
@@ -57,8 +57,8 @@ const mapDispatchToProps = (_dispatch) => {
 		toggleCheck: (listId, taskId) => {
 			_dispatch(checkTask(listId, taskId));
 		},
-		closeList: (listId) => {
-			_dispatch(closeList(listId))
+		updateListStatus: (listId, status) => {
+			_dispatch(updateListStatus(listId, status))
 		}
 	}
 };

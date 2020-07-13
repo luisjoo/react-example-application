@@ -1,4 +1,4 @@
-import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, CLOSE_TASK_TODO_LIST, REMOVE_TODO_LIST} from "./types";
+import {ADD_TODO_LIST, CHECK_TASK_TODO_LIST, UPDATE_TASK_TODO_LIST, REMOVE_TODO_LIST} from "./types";
 
 export const addToDoList = (toDoList) => ({
 	type: ADD_TODO_LIST,
@@ -18,7 +18,10 @@ export const checkTask = (listId, taskId) => ({
 	}
 });
 
-export const closeList = (listId) => ({
-	type: CLOSE_TASK_TODO_LIST,
-	data: listId
+export const updateListStatus = (listId, status) => ({
+	type: UPDATE_TASK_TODO_LIST,
+	data: {
+		listId,
+		status
+	}
 });
